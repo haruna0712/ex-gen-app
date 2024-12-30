@@ -5,7 +5,15 @@ const ps = require('@prisma/client');
 
 const prisma = new ps.PrismaClient
 
-module.exports = router;
+router.get('/', (req, res, next)=>{
+  prisma.user.findMany().then(users=> {
+    const data = {
+      title:'Users/Index',
+      content:users
+    }
+    res.render('users/index', data);
+  });
+});
 
 router.get('/login', (req, res, next) => {
   var data = {
@@ -38,3 +46,7 @@ router.post('/login', (req, res, next) => {
     }
   })
 });
+
+module.exports = router;
+
+
